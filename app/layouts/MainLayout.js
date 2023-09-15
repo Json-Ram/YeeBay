@@ -2,6 +2,7 @@
 import TopMenu from "./includes/TopMenu";
 import MainHeader from "./includes/MainHeader";
 import SubMenu from "./includes/SubMenu";
+import Footer from "./includes/Footer";
 
 const MainLayout = ({ children }) => {
   return (
@@ -11,6 +12,8 @@ const MainLayout = ({ children }) => {
           <TopMenu />
           <MainHeader />
           <SubMenu />
+          {children}
+          <Footer />
         </div>
       </div>
     </>
