@@ -1,6 +1,7 @@
 'use client';
 import TopMenu from "./includes/TopMenu";
 import MainHeader from "./includes/MainHeader";
+import SubMenu from "./includes/SubMenu";
 
 const MainLayout = ({ children }) => {
   return (
@@ -9,6 +10,7 @@ const MainLayout = ({ children }) => {
         <div>
           <TopMenu />
           <MainHeader />
+          <SubMenu />
         </div>
       </div>
     </>
