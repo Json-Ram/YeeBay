@@ -1,5 +1,5 @@
 "use client";
-import ProductComp from "./Product";
+import Product from "./Product";
 import { BiLoader } from "react-icons/bi";
 
 const SimilarProducts = () => {
@@ -33,7 +33,7 @@ const SimilarProducts = () => {
           {products.length > 0 ? 
             <div className="grid grid-cols-5 gap-4">
               {products.map(product => (
-                <ProductComp key={product.id} product={product} />
+                <Product key={product.id} product={product} />
               ))}
             </div>
           : <div className="flex items-center justify-center">
