@@ -1,9 +1,8 @@
 "use client";
-import MainLayout from "./layouts/MainLayout";
-import CarouselComp from "./components/CarouselComp";
-import Product from "./components/Product";
+import ProductComp from "./Product";
+import { BiLoader } from "react-icons/bi";
 
-export default function Home() {
+const SimilarProducts = () => {
 
   const products = [
     {
@@ -23,19 +22,31 @@ export default function Home() {
   ]
 
   return (
-    <MainLayout>
-      <CarouselComp />
+    <>
+      <div>
+        <div className="border-b py-1 max-w-[1200px] mx-auto" />
 
-      <div className="max-w-[1200px] mx-auto">
-        <div className="text-2xl font-bold mt-4 mb-6 px-4">
-          Products
-        </div>
-        <div className="grid grid-cols-5 gap-4">
-          {products.map(product => (
-            <Product key={product.id} product={product}/>
-          ))}
+        <div className="max-w-[1200px] mx-auto">
+          <div className="font-bold text-2xl py-2 mt-4">
+            Similar sponsored items
+          </div>
+          {products.length > 0 ? 
+            <div className="grid grid-cols-5 gap-4">
+              {products.map(product => (
+                <ProductComp key={product.id} product={product} />
+              ))}
+            </div>
+          : <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center gap-4 font-semibold">
+                <BiLoader size={30} className="text-blue-400 antimate-spin" />
+                Loading Products...
+              </div>
+            </div>
+          }
         </div>
       </div>
-    </MainLayout>
+    </>
   )
 }
+
+export default SimilarProducts
