@@ -57,7 +57,7 @@ const TopMenu = () => {
                     {user?.name}
                   </div>
                 </div>
-                <div className="border-b"></div>
+                <div className="border-b" />
                 <ul className="bg-white">
                   <li className="text-[11px] py-2 px-4 w-full hover:underline text-blue-500 hover:text-blue-600 cursor-pointer">
                     <Link href="/orders">
