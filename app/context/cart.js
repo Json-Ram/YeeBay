@@ -43,7 +43,6 @@ const Provider = ({ children }) => {
     }
 
     cart = cart.filter(item => item.id !== product.id);
-    cart.push(product);
 
     localStorage.setItem("cart", JSON.stringify(cart));
     isItemAddedToCart(product);
