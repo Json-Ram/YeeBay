@@ -15,7 +15,7 @@ const Orders = () => {
       address: "Test",
       city: "Test",
       country: "Test",
-      postal_code: "Test",
+      zipcode: "Test",
       total: 6999,
       orderItem: [
         {
@@ -57,7 +57,7 @@ const Orders = () => {
                     <span className="font-bold mr-2">
                       Delivery Address:
                     </span>
-                    {order?.name}, {order?.address}, {order?.postal_code}, {order?.city}, {order?.country}
+                    {order?.name}, {order?.address}, {order?.zipcode}, {order?.city}, {order?.country}
                   </div>
                   <div className="pt-2">
                     <span className="font-bold mr-2">
