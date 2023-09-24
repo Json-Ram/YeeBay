@@ -7,7 +7,7 @@ const TextInput = ({ string, placeholder, error, onUpdate }) => {
         placeholder={placeholder}
         className="w-full bg-white text-gray-800 border text-sm border-[#272727] p-3 placeholder-gray-500 focus:outline-none"
         value={string || ""}
-        onChange={(event) => onUpdate(event.target,value)}
+        onChange={(event) => onUpdate(event.target.value)}
         type="text"
         autoComplete="off"
       />
