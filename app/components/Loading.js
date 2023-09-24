@@ -8,7 +8,7 @@ const Loading = () => {
         <div className="p-3 rounded-md">
           <AiOutlineLoading3Quarters size={100} className="text-blue-400 animate-spin" />
           <div className="text-center pt-5 text-xl font-bold text-white">
-            Loading.
+            Loading...
           </div>
         </div>
       </div>
