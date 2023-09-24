@@ -4,6 +4,7 @@ import { useUser } from "../context/user";
 import { useState } from "react";
 import TextInput from "../components/TextInput";
 import MainLayout from "../layouts/MainLayout";
+import useIsLoading from "../hooks/useIsLoading";
 
 //import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
@@ -34,6 +35,8 @@ const Address = () => {
       useIsLoading(false)
       return;
     }
+
+    const response = await useUserAddress();
   }
 
   return (
