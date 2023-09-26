@@ -4,18 +4,29 @@ import MainLayout from "@/app/layouts/MainLayout";
 import SimilarProducts from "@/app/components/SimilarProducts";
 import { useCart } from "@/app/context/cart";
 import { toast } from "react-toastify";
+import { useState, useEffect } from "react";
+import useIsLoading from "@/app/hooks/useIsLoading";
 
 const Product = ({ params }) => {
 
   const cart = useCart();
   
-  const product = {
-      id: 1,
-      title: "Test",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent fringilla massa lacus, eu eleifend eros consequat vel. Maecenas ornare fermentum lacus, sed pretium nisi hendrerit id. Etiam id leo sit amet ante dapibus tempor. Etiam id sapien sit amet sem mattis eleifend dignissim ut dolor. Pellentesque eu eros sed justo.",
-      url: "https://picsum.photos/id/7",
-      price: 2500
+  const [product, setProduct] = useState({});
+  
+  const getProduct = async () => {
+    useIsLoading(true);
+    setProduct({});
+
+    const response = await fetch(`/api/product/${params.id}`);
+    const prod = await response.json();
+    setProduct(prod);
+    cart.isItemAddedToCart(prod);
+    useIsLoading(false);
   }
+
+  useEffect(() => {
+    getProduct()
+  }, [])
   
   return (
     <>
