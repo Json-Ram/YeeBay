@@ -196,8 +196,8 @@ const Checkout = () => {
               <ClientOnly>
                 <div className="p-4">
                   <div className="flex items-baseline justify-between text-sm mb-1">
-                    <div>Items (2)</div>
-                    <div>$69.99</div>
+                    <div>Items ({cart.getCart().length})</div>
+                    <div>${(cart.cartTotal() / 100).toFixed(2)}</div>
                   </div>
                   <div className="flex items-center justify-between mb-4 text-sm">
                     <div>Shipping:</div>
@@ -209,10 +209,10 @@ const Checkout = () => {
                       Order Total
                     </div>
                     <div className="text-2xl font-semibold">
-                      $69.99
+                      ${(cart.cartTotal() / 100).toFixed(2)}
                     </div>
                   </div>
-                  <form>
+                  <form onSumbit={pay}>
                     <div 
                       className="border border-gray-500 p-2 rounded-sm" 
                       id="card-element" 
