@@ -212,7 +212,7 @@ const Checkout = () => {
                       ${(cart.cartTotal() / 100).toFixed(2)}
                     </div>
                   </div>
-                  <form onSumbit={pay}>
+                  <form onSubmit={pay}>
                     <div 
                       className="border border-gray-500 p-2 rounded-sm" 
                       id="card-element" 

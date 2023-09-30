@@ -35,7 +35,7 @@ const MainHeader = () => {
       console.log(error);
       alert(error);
     }
-  }, 500)
+  }, 100)
 
 
   return (
