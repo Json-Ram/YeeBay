@@ -202,7 +202,7 @@ const Address = () => {
                   text-lg 
                   font-semibold 
                   p-3 
-                  rounded
+                  rounded-lg
                   ${isUpdatingAddress ? "bg-blue-800" : "bg-blue-400"}
                 `}
                 >

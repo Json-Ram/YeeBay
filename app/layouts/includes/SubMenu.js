@@ -19,7 +19,7 @@ const SubMenu = () => {
   return (
     <>
       <div id="SubMenu" className="border-b">
-        <div className="flex items-center justify-between w-full mx-auto max-w-[1200px]">
+        <div className="flex items-center justify-center w-full mx-auto max-w-[1200px]">
           <ul 
             id="TopMenuLeft"
             className="flex items-center text-[13px] text-[#333333] px-2 h-8"

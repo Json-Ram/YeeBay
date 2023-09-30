@@ -74,7 +74,7 @@ const Product = ({ params }) => {
                       }
                     }}
                     className={`
-                      bg-[#3498C9] text-white py-2 px-20 rounded-full cursor-pointer
+                      bg-[#3498C9] text-white py-2 px-20 rounded-lg cursor-pointer
                       ${cart.isItemAdded ? "bg-[#e9a321] hover:bg-[#bf851a]" : "bg-[#3498C9] hover:bg-[#0054A0]"}  
                     `}
                   >

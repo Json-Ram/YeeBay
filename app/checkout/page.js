@@ -224,7 +224,7 @@ const Checkout = () => {
                     />
                     <button 
                       type="submit" 
-                      className="mt-4 bg-blue-600 text-lg w-full text-white font-semibold p-3 rounded-full"
+                      className="mt-4 bg-blue-600 text-lg w-full text-white font-semibold p-3 rounded-lg"
                     >
                       Confirm and pay
                     </button>

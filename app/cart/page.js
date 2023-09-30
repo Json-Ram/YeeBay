@@ -48,7 +48,7 @@ const Cart = () => {
                 <div className="bg-white p-4 border">
                   <button 
                     onClick={() => goToCheckout()}
-                    className="flex items-center justify-center bg-blue-600 w-full text-white font-semibold p-3 rounded-full mt-4"
+                    className="flex items-center justify-center bg-blue-600 w-full text-white font-semibold p-3 rounded-lg mt-4"
                   >
                     Go to checkout
                   </button>
