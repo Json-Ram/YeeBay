@@ -1,15 +1,143 @@
 "use client"
-import MainLayout from "../layouts/MainLayout"
-import CheckoutItem from "../components/CheckoutItem"
+import MainLayout from "../layouts/MainLayout";
+import CheckoutItem from "../components/CheckoutItem";
+import { useUser } from "../context/user";
+import { useCart } from "../context/cart";
+import { useRouter } from "next/navigation";
+import { useRef, useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import useIsLoading from "../hooks/useIsLoading";
+import useUserAddress from "../hooks/useUserAddress";
+import { loadStripe } from "@stripe/stripe-js";
 
 const Checkout = () => {
 
-  const product = {
-    id: 1,
-    title: "Test",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent fringilla massa lacus, eu eleifend eros consequat vel. Maecenas ornare fermentum lacus, sed pretium nisi hendrerit id. Etiam id leo sit amet ante dapibus tempor. Etiam id sapien sit amet sem mattis eleifend dignissim ut dolor. Pellentesque eu eros sed justo.",
-    url: "https://picsum.photos/id/7",
-    price: 2500
+  const user = useUser();
+  const cart = useCart();
+  const router = useRouter();
+
+  let stripe = useRef(null);
+  let elements = useRef(null);
+  let card = useRef(null);
+  let clientSecret = useRef(null);
+
+  const [addressDetails, setAddressDetails] = useState({});
+  const [isLoadingAddress, setIsLoadingAddress] = useState(false);
+
+  useEffect(() => {
+    if (cart?.cartTotal() <= 0) {
+      toast.error("Your cart is empty.", { autoClose: 3000 });
+      return router.push("/");
+    }
+
+    useIsLoading(true);
+
+    const getAddress = async () => {
+      if (user?.id == null || user?.id == undefined) {
+        useIsLoading(false);
+        return;
+      }
+
+      setIsLoadingAddress(true);
+      const response = await useUserAddress();
+
+      if (response) {
+        setAddressDetails(response);
+      }
+      
+      setIsLoadingAddress(false);
+    }
+
+    getAddress();
+    setTimeout(() => stripeInit(), 300);
+  }, [user])
+
+  const stripeInit = async () => {
+    stripe.current = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PK_KEY || "");
+
+    const response = await fetch("/api/stripe", {
+      method: "POST",
+      body: JSON.stringify({ amount: cart.cartTotal() })
+    });
+
+    const result = await response.json();
+
+    clientSecret.current = result.client_secret;
+    elements.current = stripe.current.elements();
+
+    var style = {
+      base: { fontSize: "18px" },
+      invalid: {
+        fontFamily: "Arial, sans-serif",
+        color: "#EE4B2B",
+        iconColor: "EE4B2B"
+      }
+    }
+
+    card.current = elements.current.create("card", { hidePostalCode: true, style: style });
+
+    card.current.mount("#card-element");
+    card.current.on("change", function (event) {
+      document.querySelector("button").disabled = event.empty;
+      document.querySelector("#card-error").textContent = event.error ? event.error.message : "";
+    });
+
+    useIsLoading(false);
+  }
+
+  const pay = async (event) => {
+    event.preventDefault();
+
+    if (Object.entries(addressDetails).length == 0) {
+      showError("Please add shipping address.");
+      return;
+    }
+
+    let result = await stripe.current.confirmCardPayment(clientSecret.current, {
+      payment_method: { card: card.current }
+    })
+
+    if (result.error) {
+      showError(result.error.message);
+    } else {
+      useIsLoading(true);
+
+      try {
+        let response = await fetch("/api/orders/create", {
+          method: "POST",
+          body: JSON.stringify({
+            stripe_id: result.paymentIntent.id,
+            name: addressDetails.name,
+            address: addressDetails.address,
+            zipcode: addressDetails.zipcode,
+            city: addressDetails.city,
+            country: addressDetails.country, 
+            products: cart.getCart(),
+            total: cart.cartTotal()
+          })
+        })
+
+        if (response.status === 200) {
+          toast.success("Order Complete!", { autoClose: 3000 });
+          cart.clearCart();
+          return router.push("/success");
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Something went wrong.", { autoClose: 3000 });
+      }
+
+      useIsLoading(false);
+    }
+  }
+
+  const showError = (errorMsgText) => {
+    let errorMsg = document.querySelector("#card-error");
+    toast.error(errorMsgText, { autoClose: 3000 });
+    errorMsg.textContent = errorMsgText;
+    setTimeout(() => {
+      errorMsg.textContent = ""
+    }, 3000);
   }
 
   return (
@@ -36,7 +164,9 @@ const Checkout = () => {
                 </div>
               </div>
               <div id="Items" className="bg-white rounded-lg mt-4">
-                <CheckoutItem key={product.id} product={product} />
+                {cart.getCart().map(product => (
+                  <CheckoutItem key={product.id} product={product} />
+                ))}
               </div>
             </div>
             <div id="PlaceOrder" className="relative -top-[6px] w-[35%] border rounded-lg">
