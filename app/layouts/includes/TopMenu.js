@@ -90,8 +90,8 @@ const TopMenu = () => {
             className="flex items-center text-[11px] text-[#333333] px-2 h-8"
           >
             <li className="flex items-center gap-2 px-3 hover:underline cursor-pointer">
-              <img width={32} src="/images/uk.png"/>
               Ship to
+              <img width={40} src="/images/canada.png"/>
             </li>
             <ClientOnly>
               <li className="px-3 hover:underline cursor-pointer">

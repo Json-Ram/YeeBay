@@ -45,7 +45,7 @@ const MainHeader = () => {
           <div className="flex items-center w-full bg-white">
             <div className="flex lg:justify-start justify-between gap-10 max-w-[1150px] w-full px-3 py-5 mx-auto">
               <Link href="/">
-                <img width="120" src="/images/logo.svg" />
+                <img width="160" src="/images/yeebay.png" />
               </Link>
 
               <div className="w-full">

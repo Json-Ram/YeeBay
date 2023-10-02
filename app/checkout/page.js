@@ -232,7 +232,7 @@ const Checkout = () => {
                 </div>
               </ClientOnly>
               <div className="flex items-center p-4 justify-center gap-2 border-t">
-                <img width={50} src="/images/logo.svg" />
+                <img width={90} src="/images/yeebay.png" />
                 <div className="font-light mb-2 mt-2">
                   Money back gaurantee!
                 </div>
